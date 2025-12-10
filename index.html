@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proyecto - Métodos Numéricos Aplicados</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<header>
+  <div class="header-content">
+    <h1>📊 Proyecto Final — Métodos Numéricos Aplicados</h1>
+    <p class="subtitle">Tres casos prácticos de aplicación: Análisis agrario, robótica y energía solar</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="tabs">
+    <div class="tab active" data-tab="A">🌾 A — Propagación de Error (Agricultura)</div>
+    <div class="tab" data-tab="B">🤖 B — Búsqueda de Raíces (Robótica)</div>
+    <div class="tab" data-tab="C">☀️ C — Integración Numérica (Energía Solar)</div>
+  </div>
+
+  <!-- PANEL A: Propagación del Error -->
+  <section id="A" class="card panel active">
+    <h2>🌾 Caso A: Estimación de Concentración de Nitrógeno</h2>
+    <div class="description">
+      <strong>Objetivo:</strong> Calcular la concentración de nitrógeno extraído (C = m/V) considerando las incertidumbres de medición. 
+      Se utiliza propagación analítica de errores y simulación Monte Carlo para comparar resultados.
+    </div>
+    
+    <div class="grid">
+      <div class="input-section">
+        <h3 style="color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">Parámetros de Entrada</h3>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">m</span>
+            Masa de nitrógeno extraído (g)
+          </label>
+          <input id="mA" type="number" value="0.25" step="0.001" placeholder="Ej: 0.25">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">σ</span>
+            Incertidumbre de la masa - σ_m (g)
+          </label>
+          <input id="smA" type="number" value="0.005" step="0.0001" placeholder="Ej: 0.005">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">V</span>
+            Volumen del extracto (mL)
+          </label>
+          <input id="VA" type="number" value="50" step="0.1" placeholder="Ej: 50">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">σ</span>
+            Incertidumbre del volumen - σ_V (mL)
+          </label>
+          <input id="sVA" type="number" value="0.2" step="0.01" placeholder="Ej: 0.2">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">N</span>
+            Número de muestras Monte Carlo
+          </label>
+          <input id="mcN" type="number" value="5000" step="1000" placeholder="Ej: 5000">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">📐</span>
+            Unidades del resultado
+          </label>
+          <select id="unitsA">
+            <option value="g_per_mL">g/mL (gramos por mililitro)</option>
+            <option value="g_per_L">g/L (gramos por litro)</option>
+            <option value="mg_per_L">mg/L (miligramos por litro)</option>
+          </select>
+        </div>
+        
+        <button class="btn-primary" id="runA">🚀 Calcular Concentración</button>
+      </div>
+      
+      <div class="output-section">
+        <div>
+          <h3 style="color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">Resultados del Análisis</h3>
+          <div class="output-box" id="outA">Presiona "Calcular Concentración" para obtener los resultados del análisis estadístico.</div>
+        </div>
+        
+        <div>
+          <div class="viz-title">📊 Distribución Monte Carlo</div>
+          <div id="histA" class="visualization"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL B: Búsqueda de Raíces -->
+  <section id="B" class="card panel">
+    <h2>🤖 Caso B: Ángulo de Lanzamiento para Robot</h2>
+    <div class="description">
+      <strong>Objetivo:</strong> Determinar el ángulo θ necesario para que un proyectil lanzado alcance un punto objetivo (x, y) 
+      dada una velocidad inicial v₀. Se resuelve mediante los métodos de Bisección y Newton-Raphson.
+    </div>
+    
+    <div class="grid">
+      <div class="input-section">
+        <h3 style="color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">Parámetros del Lanzamiento</h3>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">X</span>
+            Alcance horizontal objetivo (m)
+          </label>
+          <input id="xB" type="number" value="30" step="1" placeholder="Ej: 30">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">Y</span>
+            Altura objetivo (m)
+          </label>
+          <input id="yB" type="number" value="2" step="0.1" placeholder="Ej: 2">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">v</span>
+            Velocidad inicial v₀ (m/s)
+          </label>
+          <input id="v0B" type="number" value="20" step="1" placeholder="Ej: 20">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">g</span>
+            Aceleración gravitacional (m/s²)
+          </label>
+          <input id="gB" type="number" value="9.81" step="0.01" placeholder="Ej: 9.81">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">ε</span>
+            Tolerancia de convergencia
+          </label>
+          <input id="tolB" type="text" value="1e-8" placeholder="Ej: 1e-8">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">θ</span>
+            Estimación inicial para Newton (grados)
+          </label>
+          <input id="guessB" type="number" value="45" step="5" placeholder="Ej: 45">
+        </div>
+        
+        <button class="btn-primary" id="runB">🎯 Calcular Ángulo de Lanzamiento</button>
+      </div>
+      
+      <div class="output-section">
+        <div>
+          <h3 style="color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">Soluciones Encontradas</h3>
+          <div class="output-box" id="outB">Presiona "Calcular Ángulo" para encontrar las soluciones mediante Bisección y Newton-Raphson.</div>
+        </div>
+        
+        <div>
+          <div class="viz-title">📈 Trayectoria Calculada</div>
+          <div id="trajB" class="visualization"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL C: Integración Numérica -->
+  <section id="C" class="card panel">
+    <h2>☀️ Caso C: Energía Solar Diaria Captada</h2>
+    <div class="description">
+      <strong>Objetivo:</strong> Calcular la energía total captada por un panel solar durante el día integrando la irradiancia I(t) 
+      desde el amanecer hasta el atardecer. Se comparan los métodos del Trapecio y Simpson con un factor de inclinación k.
+    </div>
+    
+    <div class="grid">
+      <div class="input-section">
+        <h3 style="color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">Configuración del Sistema Solar</h3>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">I</span>
+            Irradiancia máxima I_max (W/m²)
+          </label>
+          <input id="ImaxC" type="number" value="800" step="10" placeholder="Ej: 800">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">🌅</span>
+            Hora de amanecer (formato decimal)
+          </label>
+          <input id="sunriseC" type="number" value="6" step="0.1" placeholder="Ej: 6.0">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">🌇</span>
+            Hora de atardecer (formato decimal)
+          </label>
+          <input id="sunsetC" type="number" value="18" step="0.1" placeholder="Ej: 18.0">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">k</span>
+            Factor de inclinación del panel (0.7 - 1.1)
+          </label>
+          <input id="kC" type="number" value="0.95" step="0.05" placeholder="Ej: 0.95">
+        </div>
+        
+        <div class="input-group">
+          <label>
+            <span class="label-icon">N</span>
+            Número de subintervalos (par)
+          </label>
+          <input id="NC" type="number" value="200" step="10" placeholder="Ej: 200">
+        </div>
+        
+        <button class="btn-primary" id="runC">⚡ Calcular Energía Total</button>
+      </div>
+      
+      <div class="output-section">
+        <div>
+          <h3 style="color: var(--accent-secondary); font-size: 1.1rem; margin-bottom: 0.5rem;">Resultados de Integración</h3>
+          <div class="output-box" id="outC">Presiona "Calcular Energía" para obtener los resultados de integración numérica.</div>
+        </div>
+        
+        <div>
+          <div class="viz-title">📊 Perfil de Irradiancia I(t)</div>
+          <div id="plotC" class="visualization"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Alvaro Rodrigo Chambilla Quispe</strong>
+    </p>
+    <p style="margin-top: 1rem; color: var(--text-muted);">
+      Proyecto de Métodos Numéricos Aplicados © 2025
+    </p>
+  </footer>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
